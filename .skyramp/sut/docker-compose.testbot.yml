@@ -1,0 +1,28 @@
+services:
+  gitea:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - gitea-data:/data
+    environment:
+      # Skip install wizard; SECRET_KEY non-empty + INSTALL_LOCK unset triggers INSTALL_LOCK=true
+      SECRET_KEY: "testbot-secret-key-1234567890abcdef"
+      INSTALL_LOCK: "true"
+      DB_TYPE: sqlite3
+      HTTP_PORT: "3000"
+      ROOT_URL: "http://localhost:3000/"
+      DISABLE_SSH: "true"
+      APP_NAME: "Gitea Testbot"
+      DOMAIN: localhost
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:3000/api/v1/version"]
+      interval: 10s
+      timeout: 10s
+      retries: 36
+      start_period: 60s
+
+volumes:
+  gitea-data:
