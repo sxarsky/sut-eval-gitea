@@ -1,0 +1,24 @@
+# Skyramp Workspace Configuration
+workspace:
+  repoName: sxarsky/sut-eval-gitea
+  repoUrl: https://github.com/sxarsky/sut-eval-gitea
+metadata:
+  schemaVersion: v1
+  mcpVersion: 0.2.150-rc.mntnc
+  executorVersion: v1.3.28
+  createdAt: "2026-06-29T00:32:28.031Z"
+  updatedAt: "2026-06-29T00:32:28.038Z"
+services:
+  - serviceName: sut-eval-gitea-backend
+    language: typescript
+    framework: playwright
+    testDirectory: tests/e2e
+    api:
+      schemaPath: http://localhost:3000/swagger.v1.json
+      authType: token
+      authHeader: Authorization
+      baseUrl: http://localhost:3000
+    runtimeDetails:
+      serverStartCommand: docker compose -f .skyramp/sut/docker-compose.testbot.yml up -d gitea
+      runtime: docker
+      dockerNetwork: sut-eval-gitea_default
