@@ -4,7 +4,7 @@ workspace:
   repoUrl: https://github.com/sxarsky/sut-eval-gitea
 metadata:
   schemaVersion: v1
-  executorVersion: v1.3.30
+  executorVersion: v1.3.32
   createdAt: "2026-06-29T18:45:39.238Z"
   updatedAt: "2026-06-29T18:45:39.245Z"
 services:
