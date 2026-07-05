@@ -1058,6 +1058,7 @@ func Routes() *web.Router {
 				Get(reqToken(), notify.ListNotifications).
 				Put(reqToken(), notify.ReadNotifications)
 			m.Get("/new", reqToken(), notify.NewAvailable)
+			m.Get("/unread-count", reqToken(), notify.NewAvailable)
 			m.Combo("/threads/{id}").
 				Get(reqToken(), notify.GetThread).
 				Patch(reqToken(), notify.ReadThread)
