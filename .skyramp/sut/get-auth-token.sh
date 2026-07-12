@@ -27,7 +27,7 @@ docker compose -f "$COMPOSE_FILE" --project-directory . exec -T -u git gitea \
     --password "$ADMIN_PASS" \
     --email "$ADMIN_EMAIL" \
     --admin \
-    --must-change-password=false 2>&1 >&2 || echo "Admin user already exists or creation skipped" >&2
+    --must-change-password=false >/dev/null 2>&1 || echo "Admin user already exists or creation skipped" >&2
 
 # Seed: create 3 test repos under the admin user (best-effort)
 for i in 1 2 3; do
