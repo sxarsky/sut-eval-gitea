@@ -52,4 +52,6 @@ TOKEN_RESPONSE=$(curl -sf -X POST \
     -u "$ADMIN_USER:$ADMIN_PASS" \
     -d '{"name": "testbot-token", "scopes": ["write:repository", "write:issue", "read:user", "write:user", "read:organization"]}')
 
-echo "$TOKEN_RESPONSE" | jq -r '.sha1'
+# jq -j (not -r): emit the raw token with NO trailing newline, else it lands in
+# the bearer Authorization header and gitea/Go rejects the malformed value.
+echo "$TOKEN_RESPONSE" | jq -j '.sha1'
