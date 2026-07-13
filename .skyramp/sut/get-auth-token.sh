@@ -9,12 +9,12 @@ API_BASE="http://localhost:3000/api/v1"
 
 # Wait for Gitea API to respond (belt-and-suspenders beyond targetReadyCheckCommand)
 echo "Verifying Gitea API is reachable..." >&2
-for i in $(seq 1 30); do
+for i in $(seq 1 90); do
     if curl -sf "$API_BASE/version" > /dev/null 2>&1; then
         break
     fi
-    if [ "$i" -eq 30 ]; then
-        echo "ERROR: Gitea API not reachable after 150s" >&2
+    if [ "$i" -eq 90 ]; then
+        echo "ERROR: Gitea API not reachable after 450s" >&2
         exit 1
     fi
     sleep 5
