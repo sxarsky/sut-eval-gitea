@@ -4,7 +4,7 @@ workspace:
   repoUrl: https://github.com/sxarsky/sut-eval-gitea
 metadata:
   schemaVersion: v1
-  executorVersion: v1.3.32
+  executorVersion: v1.3.34
   createdAt: "2026-06-29T18:45:39.238Z"
   updatedAt: "2026-06-29T18:45:39.245Z"
 services:
@@ -16,7 +16,7 @@ services:
       schemaPath: http://localhost:3000/swagger.v1.json
       authType: bearer
       authHeader: Authorization
-      baseUrl: http://localhost:3000/api/v1
+      baseUrl: http://localhost:3000
     runtimeDetails:
       serverStartCommand: docker compose -f .skyramp/sut/docker-compose.testbot.yml --project-directory . up -d --build
       serverStopCommand: docker compose -f .skyramp/sut/docker-compose.testbot.yml --project-directory . down -v
