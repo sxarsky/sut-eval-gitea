@@ -45,6 +45,7 @@ func TestAPIUserInfo(t *testing.T) {
 		resp = MakeRequest(t, req, http.StatusOK)
 		u = DecodeJSON(t, resp, &api.User{})
 		assert.Equal(t, org3.GetPlaceholderEmail(), u.Email)
+		assert.Equal(t, "<>>>>>>>", u.Initials)
 
 		// Test if the correct Mail is returned if a User is logged in
 		req = NewRequest(t, "GET", "/api/v1/users/"+org3.Name).
@@ -63,5 +64,6 @@ func TestAPIUserInfo(t *testing.T) {
 
 		u := DecodeJSON(t, resp, &api.User{})
 		assert.Equal(t, user, u.UserName)
+		assert.Equal(t, "UO", u.Initials)
 	})
 }

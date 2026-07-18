@@ -21,11 +21,13 @@ func TestUser_ToUser(t *testing.T) {
 	apiUser := toUser(t.Context(), user1, true, true)
 	assert.True(t, apiUser.IsAdmin)
 	assert.Contains(t, apiUser.AvatarURL, "://")
+	assert.Equal(t, "UO", apiUser.Initials)
 
 	user2 := unittest.AssertExistsAndLoadBean(t, &user_model.User{ID: 2, IsAdmin: false})
 
 	apiUser = toUser(t.Context(), user2, true, true)
 	assert.False(t, apiUser.IsAdmin)
+	assert.Equal(t, "<UT>>", apiUser.Initials)
 
 	apiUser = toUser(t.Context(), user1, false, false)
 	assert.False(t, apiUser.IsAdmin)
