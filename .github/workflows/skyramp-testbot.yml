@@ -35,12 +35,13 @@ jobs:
           fetch-depth: 0
           token: ${{ steps.skyramp-testbot-app-token.outputs.token }}
 
-      - uses: skyramp/testbot@eval-sut
+      - uses: skyramp/testbot@70034f7ff936e4e516064307679160cdc8da60eb # v0.11.0
         with:
           skyrampLicenseFile: ${{ secrets.SKYRAMP_LICENSE_FILE }}
           anthropicApiKey: ${{ secrets.SKYRAMP_TESTBOT_API_KEY }}
           githubToken: ${{ steps.skyramp-testbot-app-token.outputs.token }}
-          skyrampMcpVersion: v0.2.150-rc.ldw
+          skyrampMcpVersion: 0.3.0
+          skyrampExecutorVersion: v1.3.34
           sutSetupMode: 'none'
           enableDebug: true
           targetSetupCommand: 'docker system prune -f --filter "until=1h" && docker compose -f .skyramp/sut/docker-compose.testbot.yml --project-directory . up -d --build'
