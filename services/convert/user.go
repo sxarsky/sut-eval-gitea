@@ -5,6 +5,7 @@ package convert
 
 import (
 	"context"
+	"strings"
 
 	"gitea.dev/models/perm"
 	user_model "gitea.dev/models/user"
@@ -82,6 +83,21 @@ func toUser(ctx context.Context, user *user_model.User, signed, authed bool) *ap
 		result.IsActive = user.IsActive
 		result.ProhibitLogin = user.ProhibitLogin
 	}
+
+	// derive uppercase initials from the full name, falling back to the login
+	initialsSource := user.FullName
+	if strings.TrimSpace(initialsSource) == "" {
+		initialsSource = user.Name
+	}
+	var initials strings.Builder
+	for _, part := range strings.Fields(initialsSource) {
+		r := []rune(part)
+		if len(r) > 0 {
+			initials.WriteString(strings.ToUpper(string(r[0])))
+		}
+	}
+	result.Initials = initials.String()
+
 	return result
 }
 

@@ -50,6 +50,8 @@ type User struct {
 	Website string `json:"website"`
 	// the user's description
 	Description string `json:"description"`
+	// uppercase initials derived from the user's full name (falls back to login)
+	Initials string `json:"initials"`
 	// User visibility level option: public, limited, private
 	Visibility UserVisibility `json:"visibility"`
 
