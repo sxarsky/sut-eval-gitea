@@ -36,6 +36,7 @@ func TestAPIUserInfo(t *testing.T) {
 
 		u := DecodeJSON(t, resp, &api.User{})
 		assert.Equal(t, user2, u.UserName)
+		assert.NotEmpty(t, u.Initials)
 
 		req = NewRequest(t, "GET", "/api/v1/users/"+user2)
 		MakeRequest(t, req, http.StatusNotFound)
@@ -63,5 +64,6 @@ func TestAPIUserInfo(t *testing.T) {
 
 		u := DecodeJSON(t, resp, &api.User{})
 		assert.Equal(t, user, u.UserName)
+		assert.NotEmpty(t, u.Initials)
 	})
 }

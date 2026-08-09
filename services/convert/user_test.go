@@ -21,6 +21,7 @@ func TestUser_ToUser(t *testing.T) {
 	apiUser := toUser(t.Context(), user1, true, true)
 	assert.True(t, apiUser.IsAdmin)
 	assert.Contains(t, apiUser.AvatarURL, "://")
+	assert.NotEmpty(t, apiUser.Initials)
 
 	user2 := unittest.AssertExistsAndLoadBean(t, &user_model.User{ID: 2, IsAdmin: false})
 
@@ -36,4 +37,5 @@ func TestUser_ToUser(t *testing.T) {
 	apiUser = toUser(t.Context(), user31, true, true)
 	assert.False(t, apiUser.IsAdmin)
 	assert.Equal(t, api.UserVisibilityPrivate, apiUser.Visibility)
+	assert.NotEmpty(t, apiUser.Initials)
 }
