@@ -1,0 +1,60 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "host.docker.internal",
+    "RequestBody": "{\"username\": \"nofullnameuser1\", \"email\": \"nofullnameuser1@example.com\", \"password\": \"TestPassword123!\", \"source_id\": 0, \"send_notify\": false}",
+    "ResponseBody": "{\"id\": 2, \"login\": \"nofullnameuser1\", \"initials\": \"N\"}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/api/v1/admin/users",
+    "QueryParams": {},
+    "StatusCode": 201,
+    "Port": 3000,
+    "Timestamp": "2026-08-09T04:32:07.994Z",
+    "Scheme": "http",
+    "scenarioName": "user-initials-login-fallback",
+    "UniqueFields": [
+      "username",
+      "email"
+    ]
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "host.docker.internal",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/api/v1/admin/users/nofullnameuser1",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 3000,
+    "Timestamp": "2026-08-09T04:32:08.994Z",
+    "Scheme": "http",
+    "scenarioName": "user-initials-login-fallback"
+  }
+]

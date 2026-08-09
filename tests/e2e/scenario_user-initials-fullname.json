@@ -1,0 +1,87 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "host.docker.internal",
+    "RequestBody": "{\"username\": \"testinitialsuser1\", \"email\": \"testinitialsuser1@example.com\", \"password\": \"TestPassword123!\", \"full_name\": \"Alice Smith\", \"source_id\": 0, \"send_notify\": false}",
+    "ResponseBody": "{\"id\": 1, \"login\": \"testinitialsuser1\", \"full_name\": \"Alice Smith\", \"initials\": \"AS\"}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/api/v1/admin/users",
+    "QueryParams": {},
+    "StatusCode": 201,
+    "Port": 3000,
+    "Timestamp": "2026-08-09T04:32:04.292Z",
+    "Scheme": "http",
+    "scenarioName": "user-initials-fullname",
+    "UniqueFields": [
+      "username",
+      "email"
+    ]
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "host.docker.internal",
+    "RequestBody": "",
+    "ResponseBody": "{\"login\": \"testinitialsuser1\", \"initials\": \"AS\"}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/api/v1/users/testinitialsuser1",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 3000,
+    "Timestamp": "2026-08-09T04:32:05.292Z",
+    "Scheme": "http",
+    "scenarioName": "user-initials-fullname"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "host.docker.internal",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/api/v1/admin/users/testinitialsuser1",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 3000,
+    "Timestamp": "2026-08-09T04:32:06.292Z",
+    "Scheme": "http",
+    "scenarioName": "user-initials-fullname"
+  }
+]
