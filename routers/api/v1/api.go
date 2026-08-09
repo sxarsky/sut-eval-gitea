@@ -1724,6 +1724,9 @@ func Routes() *web.Router {
 				m.Combo("/{username}").Get(reqToken(), org.IsMember).
 					Delete(reqToken(), reqOrgOwnership(), org.DeleteMember)
 			}, reqOrgVisible())
+			m.Group("/members/{username}/teams", func() {
+				m.Get("", reqToken(), org.ListMemberTeams)
+			}, reqOrgVisible())
 			addActionsRoutes(
 				m,
 				reqOrgMembership(),

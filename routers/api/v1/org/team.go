@@ -899,3 +899,48 @@ func ListTeamActivityFeeds(ctx *context.APIContext) {
 	ctx.SetTotalCountHeader(count)
 	ctx.JSON(http.StatusOK, convert.ToActivities(ctx, feeds, ctx.Doer))
 }
+
+// ListMemberTeams lists the teams within an organization that a given member belongs to
+func ListMemberTeams(ctx *context.APIContext) {
+	// swagger:operation GET /orgs/{org}/members/{username}/teams organization orgListMemberTeams
+	// ---
+	// summary: List the teams a member belongs to within an organization
+	// produces:
+	// - application/json
+	// parameters:
+	// - name: org
+	//   in: path
+	//   description: name of the organization
+	//   type: string
+	//   required: true
+	// - name: username
+	//   in: path
+	//   description: username of the member whose teams are to be listed
+	//   type: string
+	//   required: true
+	// responses:
+	//   "200":
+	//     "$ref": "#/responses/TeamList"
+	//   "404":
+	//     "$ref": "#/responses/notFound"
+
+	u := user.GetContextUserByPathParam(ctx)
+	if ctx.Written() {
+		return
+	}
+
+	teams, err := organization.GetUserOrgTeams(ctx, ctx.Org.Organization.ID, u.ID)
+	if err != nil {
+		ctx.APIErrorInternal(err)
+		return
+	}
+
+	apiTeams, err := convert.ToTeams(ctx, teams, false)
+	if err != nil {
+		ctx.APIErrorInternal(err)
+		return
+	}
+
+	ctx.SetTotalCountHeader(int64(len(apiTeams)))
+	ctx.JSON(http.StatusOK, apiTeams)
+}
