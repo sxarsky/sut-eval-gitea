@@ -530,6 +530,7 @@ func registerWebRoutes(m *web.Router, webAuth *AuthMiddleware) {
 	m.Post("/-/markup", reqSignIn, web.Bind(structs.MarkupOption{}), misc.Markup)
 	m.Post("/-/web-banner/dismiss", misc.WebBannerDismiss)
 	m.Get("/-/web-theme/list", misc.WebThemeList)
+	m.Methods("GET, HEAD", "/-/web-theme/source", misc.ThemeSource)
 	m.Post("/-/web-theme/apply", optSignIn, misc.WebThemeApply)
 
 	m.Group("/explore", func() {
