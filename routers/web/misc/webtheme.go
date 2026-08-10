@@ -5,8 +5,11 @@ package misc
 
 import (
 	"net/http"
+	"path/filepath"
 
+	"gitea.dev/modules/httpcache"
 	"gitea.dev/modules/optional"
+	"gitea.dev/modules/setting"
 	"gitea.dev/modules/templates"
 	"gitea.dev/modules/util"
 	"gitea.dev/modules/web/middleware"
@@ -16,6 +19,21 @@ import (
 )
 
 func WebThemeList(ctx *context.Context) {
+	// When a `file` query parameter is supplied, return the raw CSS source of an
+	// installed custom theme (from custom/public/assets/css) so admins can
+	// review or export the branding stylesheet, instead of the theme list.
+	if fileName := ctx.FormString("file"); fileName != "" {
+		themeDir := util.FilePathJoinAbs(setting.CustomPath, "public/assets/css")
+		themePath := filepath.Join(themeDir, fileName)
+		if ok, _ := util.IsExist(themePath); !ok {
+			ctx.HTTPError(http.StatusNotFound)
+			return
+		}
+		httpcache.SetCacheControlInHeader(ctx.Resp.Header(), httpcache.CacheControlForPublicStatic())
+		http.ServeFile(ctx.Resp, ctx.Req, themePath)
+		return
+	}
+
 	curWebTheme := ctx.TemplateContext.CurrentWebTheme()
 	renderUtils := templates.NewRenderUtils(ctx)
 	allThemes := webtheme.GetAvailableThemes()
