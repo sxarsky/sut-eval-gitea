@@ -6,6 +6,7 @@ package misc
 import (
 	"net/http"
 	"path"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -69,6 +70,27 @@ func RobotsTxt(w http.ResponseWriter, req *http.Request) {
 	}
 	httpcache.SetCacheControlInHeader(w.Header(), httpcache.CacheControlForPublicStatic())
 	http.ServeFile(w, req, robotsTxt)
+}
+
+// ThemeSource serves the raw CSS source of an installed custom theme so that
+// instance admins can review or export the branding stylesheets they dropped
+// into the custom directory without opening a shell on the server.
+func ThemeSource(w http.ResponseWriter, req *http.Request) {
+	fileName := req.URL.Query().Get("file")
+	if fileName == "" {
+		http.Error(w, "missing theme file name", http.StatusBadRequest)
+		return
+	}
+
+	themeDir := util.FilePathJoinAbs(setting.CustomPath, "public/assets/css")
+	themePath := filepath.Join(themeDir, fileName)
+	if ok, _ := util.IsExist(themePath); !ok {
+		http.Error(w, "theme not found", http.StatusNotFound)
+		return
+	}
+
+	httpcache.SetCacheControlInHeader(w.Header(), httpcache.CacheControlForPublicStatic())
+	http.ServeFile(w, req, themePath)
 }
 
 func StaticRedirect(target string) func(w http.ResponseWriter, req *http.Request) {
