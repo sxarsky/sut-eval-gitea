@@ -15,6 +15,7 @@ import (
 
 	activities_model "gitea.dev/models/activities"
 	"gitea.dev/models/db"
+	issues_model "gitea.dev/models/issues"
 	"gitea.dev/models/organization"
 	"gitea.dev/models/perm"
 	access_model "gitea.dev/models/perm/access"
@@ -520,6 +521,41 @@ func Get(ctx *context.APIContext) {
 
 	if err := ctx.Repo.Repository.LoadAttributes(ctx); err != nil {
 		ctx.APIErrorInternal(err)
+		return
+	}
+
+	// summarize=issues returns the repo's open-issue count alongside an
+	// open/closed breakdown of its issues in a single response.
+	if ctx.FormString("summarize") == "issues" {
+		repo := ctx.Repo.Repository
+
+		openCount, err := issues_model.CountIssues(ctx, &issues_model.IssuesOptions{
+			RepoIDs:  []int64{repo.ID},
+			IsPull:   optional.Some(false),
+			IsClosed: optional.Some(false),
+		})
+		if err != nil {
+			ctx.APIErrorInternal(err)
+			return
+		}
+
+		closedCount, err := issues_model.CountIssues(ctx, &issues_model.IssuesOptions{
+			RepoIDs:  []int64{repo.ID},
+			IsPull:   optional.Some(false),
+			IsClosed: optional.Some(true),
+		})
+		if err != nil {
+			ctx.APIErrorInternal(err)
+			return
+		}
+
+		ctx.JSON(http.StatusOK, map[string]any{
+			"open_issues_count": repo.NumOpenIssues,
+			"issues": map[string]any{
+				"open":   openCount,
+				"closed": closedCount,
+			},
+		})
 		return
 	}
 
