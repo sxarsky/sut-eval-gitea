@@ -79,6 +79,8 @@ type MarkdownRender string
 type ServerVersion struct {
 	// Version is the server version string
 	Version string `json:"version"`
+	// Edition is the server edition
+	Edition string `json:"edition"`
 }
 
 // GitignoreTemplateInfo name and text of a gitignore template
